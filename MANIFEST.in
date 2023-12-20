@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include anb_api *.css
+recursive-include anb_api *.csv
+recursive-include anb_api *.html
+recursive-include anb_api *.ico
+recursive-include anb_api *.js
+recursive-include anb_api *.json
+recursive-include anb_api *.md
+recursive-include anb_api *.png
+recursive-include anb_api *.py
+recursive-include anb_api *.svg
+recursive-include anb_api *.txt
+recursive-exclude anb_api *.pyc
