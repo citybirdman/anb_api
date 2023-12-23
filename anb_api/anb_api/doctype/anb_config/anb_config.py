@@ -33,7 +33,10 @@ class AnbConfig(Document):
 		response = requests.post(server_url, data=encoded_payload, headers=headers)
 
 		# Print the response
-		frappe.throw(str(response.text))
+		if self.sc:
+			self.get_public_ip()
+		else:
+			frappe.throw(str(response.text))
 		# # try:
 		# # if True:
 		# api_endpoint = "https://test-api.anb.com.sa/v1/b2b-auth/oauth/accesstoken"
@@ -53,3 +56,18 @@ class AnbConfig(Document):
 		# # response = frappe.make_post_request(api_endpoint,headers=headers, data=data)
 		# # except:
 		# # 	frappe.throw(str(frappe.request.headers))
+
+	def get_public_ip(self):
+		try:
+			# Use a reliable service to get your public IP
+			response = requests.get("https://api64.ipify.org?format=json")
+
+			# Check if the request was successful (status code 200)
+			if response.status_code == 200:
+				# Parse the JSON response and print the public IP
+				public_ip = response.json()["ip"]
+				frappe.throw(f"Your public IP address is: {public_ip}")
+			else:
+				print(f"Failed to retrieve public IP. Status code: {response.status_code}")
+		except Exception as e:
+			print(f"An error occurred: {e}")

@@ -8,7 +8,8 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "name1"
+  "name1",
+  "sc"
  ],
  "fields": [
   {
@@ -16,11 +17,17 @@
    "fieldtype": "Data",
    "label": "Name",
    "unique": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "sc",
+   "fieldtype": "Check",
+   "label": "show config"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-12-21 17:08:29.165841",
+ "modified": "2023-12-23 18:58:56.539372",
  "modified_by": "Administrator",
  "module": "Anb Api",
  "name": "Anb Config",
