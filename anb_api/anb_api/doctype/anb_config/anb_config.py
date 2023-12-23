@@ -32,6 +32,7 @@ class AnbConfig(Document):
 		# Make the POST request
 		response = requests.post(server_url, data=encoded_payload, headers=headers)
 
+
 		# Print the response
 		if self.sc:
 			self.get_public_ip()
