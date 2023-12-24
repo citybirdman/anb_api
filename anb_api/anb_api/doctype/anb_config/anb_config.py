@@ -53,7 +53,7 @@ class AnbConfig(Document):
 		headers = {
 			"Accept": "application/json",
 			"Content-Type": "application/json",
-			"Authorization": "Bearer {token}",
+			"Authorization": (f"Bearer {token}"),
 		}
 		api_endpoint = "https://test-api.anb.com.sa/v1/payment/json"
 		data = {
