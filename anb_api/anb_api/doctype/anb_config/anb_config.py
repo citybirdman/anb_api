@@ -2,6 +2,7 @@
 # For license information, please see license.txt
 
 import frappe
+import json
 import requests
 from frappe.model.document import Document
 
@@ -32,6 +33,8 @@ class AnbConfig(Document):
 		if self.sc:
 			self.get_public_ip()
 		else:
+			if not self.access_token and response.status_code == 200:
+				self.access_token = json.loads(response.text)["access_token"]
 			self.make_payment()
 
 	def get_public_ip(self):
