@@ -10,26 +10,21 @@ class AnbConfig(Document):
 		# Set your server URL
 		server_url = "https://test-api.anb.com.sa/v1/b2b-auth/oauth/accesstoken"
 
-		# Set the IP address for X-Forwarded-For header
-		custom_ip_address = "15.184.183.167"
-
 		# Set your payload (adjust accordingly)
 		payload = {
 			"grant_type": "client_credentials",
 			"client_id": "Fo4Qaom8ydJHGzrUMMRGGBx2zHIQ3p1V",
 			"client_secret": "fu9yf4ojqPhd6pgk"
 		}
+
+		# convert the payload to acceptable value
 		encoded_payload = "&".join([f"{key}={value}" for key, value in payload.items()])
-		# Set headers including X-Forwarded-For
+
+		# Set the headers
 		headers = {
-			"X-Forwarded-For": custom_ip_address,
 			"Content-Type": "application/x-www-form-urlencoded",
 		}
 
-		# Add any additional headers you may need
-		# headers["Another-Header"] = "header_value"
-
-		# Make the POST request
 		response = requests.post(server_url, data=encoded_payload, headers=headers)
 
 
@@ -37,26 +32,7 @@ class AnbConfig(Document):
 		if self.sc:
 			self.get_public_ip()
 		else:
-			frappe.throw(str(response.text))
-		# # try:
-		# # if True:
-		# api_endpoint = "https://test-api.anb.com.sa/v1/b2b-auth/oauth/accesstoken"
-		# data = {
-		# 	"grant_type": "client_credentials",
-		# 	"client_id": "Fo4Qaom8ydJHGzrUMMRGGBx2zHIQ3p1V",
-		# 	"client_secret": "fu9yf4ojqPhd6pgk",
-		# 	"X-Forwarded-For": "15.184.183.167"
-		# }
-		# headers= {
-		# 	"X-Forwarded-For": "15.184.183.167"
-			
-		# }
-		
-		# # Make a POST request using frappe.post_request
-		# frappe.throw(str(frappe.get_server()))
-		# # response = frappe.make_post_request(api_endpoint,headers=headers, data=data)
-		# # except:
-		# # 	frappe.throw(str(frappe.request.headers))
+			self.make_payment(response['access_token'])
 
 	def get_public_ip(self):
 		try:
@@ -72,3 +48,36 @@ class AnbConfig(Document):
 				print(f"Failed to retrieve public IP. Status code: {response.status_code}")
 		except Exception as e:
 			print(f"An error occurred: {e}")
+
+	def make_payment(self, token):
+		headers = {
+			"Accept": "application/json",
+			"Content-Type": "application/json",
+			"Authorization": "Bearer {token}",
+		}
+		api_endpoint = "https://test-api.anb.com.sa/v1/payment/json"
+		data = {
+			"sequenceNumber": "200000879",
+			"valueDate": "1702534805",
+			"currency": "SAR",
+			"amount": "1900",
+			"orderingParty": "SWAGGER",
+			"feeIncluded": False,
+			"orderingPartyAddress1": "An Nafel",
+			"orderingPartyAddress2": "Riyadh",
+			"orderingPartyAddress3": "Saudi Arabia",
+			"debitAccount": "0108057386290014",
+			"destinationBankBIC": "ARNBSARI",
+			"channel": "ANB",
+			"creditAccount": "0108061198800019",
+			"beneficiaryName": "Saud",
+			"beneficiaryAddress1": "KSA",
+			"beneficiaryAddress2": "Riyadh",
+			"narrative": "ANB To ANB Transfer",
+			"transactionComment": "ANB to ANB works",
+			"purposeOfTransfer": "38",
+		}
+
+		# # Make a POST request using frappe.post_request
+		auth = requests.post(api_endpoint, headers=headers,json=data)
+		frappe.throw(str(auth))
