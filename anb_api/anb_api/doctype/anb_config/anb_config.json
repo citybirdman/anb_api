@@ -9,7 +9,8 @@
  "engine": "InnoDB",
  "field_order": [
   "name1",
-  "sc"
+  "sc",
+  "access_token"
  ],
  "fields": [
   {
@@ -23,11 +24,16 @@
    "fieldname": "sc",
    "fieldtype": "Check",
    "label": "show config"
+  },
+  {
+   "fieldname": "access_token",
+   "fieldtype": "Data",
+   "label": "access token"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-12-23 18:58:56.539372",
+ "modified": "2023-12-24 17:20:27.149073",
  "modified_by": "Administrator",
  "module": "Anb Api",
  "name": "Anb Config",

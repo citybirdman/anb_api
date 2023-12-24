@@ -49,11 +49,11 @@ class AnbConfig(Document):
 		except Exception as e:
 			print(f"An error occurred: {e}")
 
-	def make_payment(self, token):
+	def make_payment(self):
 		headers = {
 			"Accept": "application/json",
 			"Content-Type": "application/json",
-			"Authorization": (f"Bearer {token}"),
+			"Authorization": (f"Bearer {self.access_token}"),
 		}
 		api_endpoint = "https://test-api.anb.com.sa/v1/payment/json"
 		data = {
