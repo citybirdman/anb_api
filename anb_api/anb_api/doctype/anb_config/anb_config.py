@@ -26,7 +26,7 @@ class AnbConfig(Document):
 			"Content-Type": "application/x-www-form-urlencoded",
 		}
 
-		response = requests.post(server_url, data=encoded_payload, headers=headers)
+		# response = requests.post(server_url, data=encoded_payload, headers=headers)
 
 
 		# Print the response
@@ -34,6 +34,7 @@ class AnbConfig(Document):
 			self.get_public_ip()
 		else:
 			if not self.access_token and response.status_code == 200:
+				response = requests.post(server_url, data=encoded_payload, headers=headers)
 				self.access_token = json.loads(response.text)["access_token"]
 			elif self.access_token:
 				self.make_payment()
@@ -55,7 +56,6 @@ class AnbConfig(Document):
 
 	def make_payment(self):
 		headers = {
-			"Accept": "application/json",
 			"Content-Type": "application/json",
 			"Authorization": (f"Bearer {self.access_token}"),
 		}
@@ -83,7 +83,9 @@ class AnbConfig(Document):
 		}
 
 		# # Make a POST request using frappe.post_request
+		frappe.throw(str(headers))
 		auth = requests.post(api_endpoint, headers=headers,json=data)
-		if auth.status_code != 200:
-			frappe.log_error(auth)
-		frappe.throw(str(auth.text))
+		# if auth.status_code != 200:
+		# 	frappe.log_error(repr(auth.headers))
+		frappe.msgprint(str(auth.headers))
+		frappe.throw(auth.text)
