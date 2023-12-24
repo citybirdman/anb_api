@@ -33,7 +33,7 @@ class AnbConfig(Document):
 		if self.sc:
 			self.get_public_ip()
 		else:
-			if not self.access_token and response.status_code == 200:
+			if not self.access_token:
 				response = requests.post(server_url, data=encoded_payload, headers=headers)
 				self.access_token = json.loads(response.text)["access_token"]
 			elif self.access_token:
