@@ -62,7 +62,7 @@ class AnbConfig(Document):
 		api_endpoint = "https://test-api.anb.com.sa/v1/payment/json"
 		data = {
 			"sequenceNumber": "200000879",
-			"valueDate": "210414",
+			"valueDate": "473177",
 			"currency": "SAR",
 			"amount": "1900",
 			"orderingParty": "SWAGGER",
