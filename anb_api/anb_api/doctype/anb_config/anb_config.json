@@ -10,6 +10,7 @@
  "field_order": [
   "name1",
   "sc",
+  "payment_id",
   "access_token",
   "data"
  ],
@@ -35,11 +36,16 @@
    "fieldname": "data",
    "fieldtype": "Long Text",
    "label": "data"
+  },
+  {
+   "fieldname": "payment_id",
+   "fieldtype": "Data",
+   "label": "payment id"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-12-24 20:21:17.834702",
+ "modified": "2023-12-24 21:15:02.557195",
  "modified_by": "Administrator",
  "module": "Anb Api",
  "name": "Anb Config",
