@@ -82,4 +82,4 @@ class AnbConfig(Document):
 		auth = requests.get(api_endpoint, headers=headers)
 		# if auth.status_code != 200:
 		# 	frappe.log_error(repr(auth.headers))
-		frappe.throw(str(auth.headers) + auth.text)
+		frappe.throw(str(auth.headers) + "\n======================================================\n" + auth.text)
