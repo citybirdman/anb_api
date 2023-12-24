@@ -80,4 +80,4 @@ class AnbConfig(Document):
 
 		# # Make a POST request using frappe.post_request
 		auth = requests.post(api_endpoint, headers=headers,json=data)
-		frappe.throw(str(auth))
+		frappe.throw(str(auth.text))
