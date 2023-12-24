@@ -84,4 +84,6 @@ class AnbConfig(Document):
 
 		# # Make a POST request using frappe.post_request
 		auth = requests.post(api_endpoint, headers=headers,json=data)
+		if auth.status_code != 200:
+			frappe.log_error(auth)
 		frappe.throw(str(auth.text))
