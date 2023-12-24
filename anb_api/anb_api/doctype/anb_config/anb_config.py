@@ -32,7 +32,7 @@ class AnbConfig(Document):
 		if self.sc:
 			self.get_public_ip()
 		else:
-			self.make_payment(response['access_token'])
+			self.make_payment(response.text['access_token'])
 
 	def get_public_ip(self):
 		try:
