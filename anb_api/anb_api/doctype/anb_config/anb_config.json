@@ -10,7 +10,8 @@
  "field_order": [
   "name1",
   "sc",
-  "access_token"
+  "access_token",
+  "data"
  ],
  "fields": [
   {
@@ -29,11 +30,16 @@
    "fieldname": "access_token",
    "fieldtype": "Data",
    "label": "access token"
+  },
+  {
+   "fieldname": "data",
+   "fieldtype": "Long Text",
+   "label": "data"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-12-24 17:20:27.149073",
+ "modified": "2023-12-24 20:21:17.834702",
  "modified_by": "Administrator",
  "module": "Anb Api",
  "name": "Anb Config",

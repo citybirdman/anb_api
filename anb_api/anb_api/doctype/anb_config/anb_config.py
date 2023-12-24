@@ -60,27 +60,7 @@ class AnbConfig(Document):
 			"Authorization": (f"Bearer {self.access_token}"),
 		}
 		api_endpoint = "https://test-api.anb.com.sa/v1/payment/json"
-		data = {
-			"sequenceNumber": "200000879",
-			"valueDate": "20231224",
-			"currency": "SAR",
-			"amount": "1900",
-			"orderingParty": "SWAGGER",
-			"feeIncluded": False,
-			"orderingPartyAddress1": "An Nafel",
-			"orderingPartyAddress2": "Riyadh",
-			"orderingPartyAddress3": "Saudi Arabia",
-			"debitAccount": "0108057386290014",
-			"destinationBankBIC": "ARNBSARI",
-			"channel": "ANB",
-			"creditAccount": "0108061198800019",
-			"beneficiaryName": "Saud",
-			"beneficiaryAddress1": "KSA",
-			"beneficiaryAddress2": "Riyadh",
-			"narrative": "ANB To ANB Transfer",
-			"transactionComment": "ANB to ANB works",
-			"purposeOfTransfer": "38",
-		}
+		data = json.loads(self.data)
 
 		# # Make a POST request using frappe.post_request
 		auth = requests.post(api_endpoint, headers=headers,json=data)
