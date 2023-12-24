@@ -35,7 +35,8 @@ class AnbConfig(Document):
 		else:
 			if not self.access_token and response.status_code == 200:
 				self.access_token = json.loads(response.text)["access_token"]
-			self.make_payment()
+			elif self.access_token:
+				self.make_payment()
 
 	def get_public_ip(self):
 		try:
