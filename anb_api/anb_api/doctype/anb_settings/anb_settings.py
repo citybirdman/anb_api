@@ -8,8 +8,8 @@ from frappe.model.document import Document
 
 class ANBSettings(Document):
 	def validate(self):
-		ci = get_decrypted_password(self.doctype, self.name, "client_secret")
-		self.validate_connection(self.url, self.client_id, ci)
+		# ci = get_decrypted_password(self.doctype, self.name, "client_secret")
+		self.validate_connection(self.url, self.client_id, "fu9yf4ojqPhd6pgk")
 
 
 	def validate_connection(self, url, ci, cs):
