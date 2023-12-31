@@ -3,15 +3,14 @@
 import json
 import frappe
 import requests
-from frappe.utils.password import get_decrypted_password
+import frappe.utils.password as psswd
 from frappe.model.document import Document
 
 class ANBSettings(Document):
 	def validate(self):
-		# ci = get_decrypted_password(self.doctype, self.name, "client_secret")
-		self.validate_connection(self.url, self.client_id, "fu9yf4ojqPhd6pgk")
-
-
+		ci = self.get_password("client_secret")
+		self.validate_connection(self.url, self.client_id, ci)
+		
 	def validate_connection(self, url, ci, cs):
 		protocol = "https://"
 		server_url = f"{protocol}{url}/b2b-auth/oauth/accesstoken"
