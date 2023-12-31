@@ -1,0 +1,89 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2023-12-25 19:55:19.257391",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "url",
+  "client_id",
+  "client_secret",
+  "main_bank_account",
+  "column_break_3qd7q",
+  "enable_for_payment_entry",
+  "enable_for_journal_entry"
+ ],
+ "fields": [
+  {
+   "fieldname": "url",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "URL",
+   "reqd": 1
+  },
+  {
+   "fieldname": "client_id",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Client ID",
+   "reqd": 1
+  },
+  {
+   "fieldname": "client_secret",
+   "fieldtype": "Password",
+   "in_list_view": 1,
+   "label": "Client Secret",
+   "reqd": 1
+  },
+  {
+   "fieldname": "main_bank_account",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Main Bank Account",
+   "options": "ANB Bank Account",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_3qd7q",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "enable_for_payment_entry",
+   "fieldtype": "Check",
+   "label": "Enable For Payment entry"
+  },
+  {
+   "default": "0",
+   "fieldname": "enable_for_journal_entry",
+   "fieldtype": "Check",
+   "label": "Enable For Journal entry"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2023-12-26 12:02:34.254744",
+ "modified_by": "Administrator",
+ "module": "Anb Api",
+ "name": "ANB Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
