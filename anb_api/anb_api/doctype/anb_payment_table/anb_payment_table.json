@@ -1,0 +1,38 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-01-01 19:33:20.806234",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "transaction_number",
+  "payment_log"
+ ],
+ "fields": [
+  {
+   "fieldname": "transaction_number",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Transaction Number"
+  },
+  {
+   "fieldname": "payment_log",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Payment Log"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2024-01-01 19:46:31.808098",
+ "modified_by": "Administrator",
+ "module": "Anb Api",
+ "name": "Anb Payment Table",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

@@ -24,8 +24,14 @@ class ANBSettings(Document):
 		# making response text
 		response = requests.post(server_url, data=encoded_payload, headers=headers)
 		if response.status_code == 401:
-			frappe.throw(json.loads(response.text)['error']['message'] + f"\nerror code:{response.status_code}", title="Error Connecting To The Bank Server!")
+			frappe.throw(json.loads(response.text)['error']['message'] + f"\n,error code:{response.status_code}", title="Error Connecting To The Bank Server!")
 		elif response.status_code == 200:
 			frappe.msgprint("Connection Accepted!", alert=True)
+			self.accepted = True
 		elif response.status_code == 400:
-			frappe.throw(json.loads(response.text)['message'] + f"\nerror code:{response.status_code}", title="Error Connecting To The Bank Server!")
+			frappe.throw(json.loads(response.text)['message'] + f"\n,error code:{response.status_code}", title="Error Connecting To The Bank Server!")
+		else:
+			frappe.throw("Something Wrong! Please Check Your Information")
+
+def get_anb_access_token(server_url, data, headers={}):
+	import requests

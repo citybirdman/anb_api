@@ -9,11 +9,10 @@
  "field_order": [
   "url",
   "client_id",
+  "column_break_ryqk7",
   "client_secret",
-  "main_bank_account",
-  "column_break_3qd7q",
-  "enable_for_payment_entry",
-  "enable_for_journal_entry"
+  "section_break_kha6c",
+  "accounts"
  ],
  "fields": [
   {
@@ -38,34 +37,24 @@
    "reqd": 1
   },
   {
-   "fieldname": "main_bank_account",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Main Bank Account",
-   "options": "ANB Bank Account",
-   "reqd": 1
-  },
-  {
-   "fieldname": "column_break_3qd7q",
+   "fieldname": "column_break_ryqk7",
    "fieldtype": "Column Break"
   },
   {
-   "default": "0",
-   "fieldname": "enable_for_payment_entry",
-   "fieldtype": "Check",
-   "label": "Enable For Payment entry"
+   "fieldname": "section_break_kha6c",
+   "fieldtype": "Section Break"
   },
   {
-   "default": "0",
-   "fieldname": "enable_for_journal_entry",
-   "fieldtype": "Check",
-   "label": "Enable For Journal entry"
+   "fieldname": "accounts",
+   "fieldtype": "Table",
+   "label": "Accounts",
+   "options": "Anb Settings Table"
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2023-12-26 12:02:34.254744",
+ "modified": "2024-01-01 20:10:27.396213",
  "modified_by": "Administrator",
  "module": "Anb Api",
  "name": "ANB Settings",
