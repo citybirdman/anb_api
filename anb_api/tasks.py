@@ -1,5 +1,6 @@
 import frappe
 import requests
+@frappe.whitelist()
 def get_balance():
     settings = frappe.get_doc("ANB Settings")
     settings.start_connection()
