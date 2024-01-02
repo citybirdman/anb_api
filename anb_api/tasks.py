@@ -11,4 +11,4 @@ def get_balance():
     account_number = "0108095164500016"
     from_date = "2023-12-25"
     auth = requests.get(f"https://test-api.anb.com.sa/v2/report/account/statement?accountNumber={account_number}&offset=Offset&type=JSON&fromDate={from_date}", headers=headers)
-    return auth
+    return auth.text
