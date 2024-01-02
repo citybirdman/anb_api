@@ -8,10 +8,12 @@ from frappe.model.document import Document
 
 class ANBSettings(Document):
 	def validate(self):
-		ci = self.get_password("client_secret")
-		self.validate_connection(self.url, self.client_id, ci)
-		
-	def validate_connection(self, url, ci, cs):
+		self.start_connection()
+	
+	def start_connection(self):
+		url = self.url
+		ci = self.client_id
+		cs = self.get_password("client_secret")
 		protocol = "https://"
 		server_url = f"{protocol}{url}/b2b-auth/oauth/accesstoken"
 		payload = {
@@ -32,6 +34,4 @@ class ANBSettings(Document):
 			frappe.throw(json.loads(response.text)['message'] + f"\n,error code:{response.status_code}", title="Error Connecting To The Bank Server!")
 		else:
 			frappe.throw("Something Wrong! Please Check Your Information")
-
-def get_anb_access_token(server_url, data, headers={}):
-	import requests
+		return response

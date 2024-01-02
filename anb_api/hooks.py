@@ -129,23 +129,23 @@ app_license = "MIT"
 # Scheduled Tasks
 # ---------------
 
-# scheduler_events = {
+scheduler_events = {
 #	"all": [
 #		"anb_api.tasks.all"
 #	],
 #	"daily": [
 #		"anb_api.tasks.daily"
 #	],
-#	"hourly": [
-#		"anb_api.tasks.hourly"
-#	],
+	"hourly": [
+		"anb_api.tasks.get_balance"
+	],
 #	"weekly": [
 #		"anb_api.tasks.weekly"
 #	],
 #	"monthly": [
 #		"anb_api.tasks.monthly"
 #	],
-# }
+}
 
 # Testing
 # -------
