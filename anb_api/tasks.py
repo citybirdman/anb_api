@@ -15,12 +15,12 @@ def get_account_statment(account_number, settings, try_again=True, headers={}):
 
 @frappe.whitelist()
 def get_statments():
+    settings = frappe.get_doc("ANB Settings")
     response = json.loads(settings.start_connection().text)
     headers = {
         "Authorization": f"Bearer {response['access_token']}",
         "Accept": "application/json"
     }
-    settings = frappe.get_doc("ANB Settings")
     results = []
     for account in settings.accounts:
         results.append(get_account_statment(account.account_number, settings, True, headers))
