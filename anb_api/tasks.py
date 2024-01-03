@@ -2,8 +2,8 @@ import frappe
 import json
 import requests
 from frappe.utils import add_days, today
-@frappe.whitelist(try_again=True)
-def get_balance():
+@frappe.whitelist()
+def get_balance(try_again=True):
     settings = frappe.get_doc("ANB Settings")
     response = json.loads(settings.start_connection().text)
     headers = {
