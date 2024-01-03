@@ -1,9 +1,10 @@
 import frappe
+import json
 import requests
 @frappe.whitelist()
 def get_balance():
     settings = frappe.get_doc("ANB Settings")
-    response = settings.start_connection().text.json()
+    response = json.loads(settings.start_connection().text)
     headers = {
         "Authorization": f"Bearer {response['access_token']}",
         "Accept": "application/json"
