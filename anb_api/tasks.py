@@ -12,7 +12,8 @@ def get_account_statment(account_number, settings, try_again=True, headers={}):
             return {"account_number": account_number, "completed": False}
     else:
         return json.loads(response.text)
-
+    
+@frappe.whitelist()
 def get_statments():
     settings = frappe.get_doc("ANB Settings")
     response = json.loads(settings.start_connection().text)
@@ -28,7 +29,7 @@ def get_statments():
 @frappe.whitelist()
 def make_bank_logs():
     bank_response = get_statments()
-    if isinstance(bank_response, dict) and bank_response.get("statement").get("transactions"):
+    if isinstance(bank_response, list) and bank_response.get("statement").get("transactions"):
         transactions = bank_response.get("statement").get("transactions")
         logs = []
         for transaction in transactions:
