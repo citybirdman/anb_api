@@ -2,15 +2,21 @@
 # For license information, please see license.txt
 import json
 import frappe
+import time
 import requests
 import frappe.utils.password as psswd
 from frappe.model.document import Document
 
 class ANBSettings(Document):
+	def __init__(self, *args, **kwargs):
+		super(ANBSettings, self).__init__(*args, **kwargs)
+		self.second_try = False
 	def validate(self):
 		self.start_connection()
 	
 	def start_connection(self):
+		if self.second_try:
+			time.sleep(3)
 		url = self.url
 		ci = self.client_id
 		cs = self.get_password("client_secret")
@@ -25,6 +31,9 @@ class ANBSettings(Document):
 		headers = {"Content-Type": "application/x-www-form-urlencoded"}
 		# making response text
 		response = requests.post(server_url, data=encoded_payload, headers=headers)
+		if response.status_code != 200 and not self.second_try:
+			self.second_try = True
+			self.start_connection()
 		if response.status_code == 401:
 			frappe.throw(json.loads(response.text)['error']['message'] + f"\n,error code:{response.status_code}", title="Error Connecting To The Bank Server!")
 		elif response.status_code == 200:

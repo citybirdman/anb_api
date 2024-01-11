@@ -9,12 +9,12 @@
  "engine": "InnoDB",
  "field_order": [
   "naming_series",
-  "column_break_ohxeh",
   "posting_date",
-  "column_break_smsb4",
+  "column_break_ohxeh",
   "posting_time",
   "payment_logs_section",
   "logs",
+  "response",
   "amended_from"
  ],
  "fields": [
@@ -38,10 +38,6 @@
    "reqd": 1
   },
   {
-   "fieldname": "column_break_smsb4",
-   "fieldtype": "Column Break"
-  },
-  {
    "fieldname": "posting_time",
    "fieldtype": "Time",
    "label": "Posting Time"
@@ -58,19 +54,30 @@
    "options": "Anb Payment Table"
   },
   {
+   "fieldname": "response",
+   "fieldtype": "Long Text",
+   "hidden": 1,
+   "label": "response",
+   "no_copy": 1,
+   "print_hide": 1,
+   "read_only": 1,
+   "report_hide": 1
+  },
+  {
    "fieldname": "amended_from",
    "fieldtype": "Link",
    "label": "Amended From",
    "no_copy": 1,
    "options": "Anb Log Queue",
    "print_hide": 1,
-   "read_only": 1
+   "read_only": 1,
+   "search_index": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-01-01 20:06:13.771064",
+ "modified": "2024-01-11 17:19:16.645454",
  "modified_by": "Administrator",
  "module": "Anb Api",
  "name": "Anb Log Queue",

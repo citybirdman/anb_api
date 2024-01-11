@@ -9,8 +9,19 @@
  "engine": "InnoDB",
  "field_order": [
   "transaction_number",
+  "customer_name",
+  "bank_account_number",
+  "date",
+  "time",
+  "amount",
+  "type",
+  "column_break_knwn7",
   "naming_series",
-  "date"
+  "currency",
+  "channel",
+  "network",
+  "log",
+  "status"
  ],
  "fields": [
   {
@@ -31,11 +42,72 @@
    "fieldname": "date",
    "fieldtype": "Date",
    "label": "Date"
+  },
+  {
+   "fieldname": "customer_name",
+   "fieldtype": "Link",
+   "label": "Customer name",
+   "options": "Customer"
+  },
+  {
+   "fieldname": "bank_account_number",
+   "fieldtype": "Data",
+   "label": "Bank Account Number"
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Float",
+   "label": "Amount"
+  },
+  {
+   "fieldname": "type",
+   "fieldtype": "Data",
+   "label": "Type"
+  },
+  {
+   "fieldname": "column_break_knwn7",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "label": "Currency",
+   "options": "Currency"
+  },
+  {
+   "fieldname": "channel",
+   "fieldtype": "Data",
+   "label": "Channel"
+  },
+  {
+   "fieldname": "network",
+   "fieldtype": "Data",
+   "label": "network"
+  },
+  {
+   "fieldname": "log",
+   "fieldtype": "Long Text",
+   "hidden": 1,
+   "label": "Log",
+   "print_hide": 1,
+   "read_only": 1,
+   "report_hide": 1
+  },
+  {
+   "fieldname": "time",
+   "fieldtype": "Data",
+   "label": "Time"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "status",
+   "options": "Success\nFailed"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-01-01 20:05:33.163138",
+ "modified": "2024-01-11 17:33:14.308998",
  "modified_by": "Administrator",
  "module": "Anb Api",
  "name": "Anb Payment Log",

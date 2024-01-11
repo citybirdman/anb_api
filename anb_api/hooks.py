@@ -64,7 +64,7 @@ app_license = "MIT"
 # ------------
 
 # before_install = "anb_api.install.before_install"
-# after_install = "anb_api.install.after_install"
+after_install = "anb_api.install.after_install"
 
 # Uninstallation
 # ------------
@@ -137,7 +137,7 @@ scheduler_events = {
 #		"anb_api.tasks.daily"
 #	],
 	"hourly": [
-		"anb_api.tasks.get_balance"
+		"anb_api.tasks.make_bank_logs"
 	],
 #	"weekly": [
 #		"anb_api.tasks.weekly"

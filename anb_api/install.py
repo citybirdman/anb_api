@@ -12,10 +12,10 @@ def create_parking_account_field():
 				fieldname="anb_bank_account",
 				label="ANB Bank Account",
 				fieldtype="Data",
-				insert_after="stock_received_but_not_billed",
+				insert_after="credit_limit_section",
 				ignore_user_permissions=1,
 				unique=1,
-				no_copy=1,
+				no_copy=1
 			)
 		]
 	}
