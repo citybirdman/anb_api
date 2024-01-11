@@ -28,37 +28,38 @@ def get_statments():
 
 @frappe.whitelist()
 def make_bank_logs():
-    bank_response = get_statments()
-    if isinstance(bank_response, list) and bank_response.get("statement").get("transactions"):
-        transactions = bank_response.get("statement").get("transactions")
-        logs = []
-        for transaction in transactions:
-            customer = frappe.db.get_value("Customer", [["anb_bank_account", "=", transaction["narrative"]["narr3"]]], ["name", "anb_bank_account"], as_dict=True)
-            payment_log = frappe.get_doc(dict(
-                doctype = "Anb Payment Log",
-                transaction_number = transaction["refNum"],
-                customer_name = customer.name if customer else "",
-                bank_account_number = customer.anb_bank_account if customer else transaction["narrative"]["narr3"],
-                date = transaction["valueDate"],
-                time = transaction["postingTime"],
-                amount = transaction["amount"].get("amount"),
-                currency= transaction["amount"].get("currencyCode"),
-                channel= transaction["channel"],
-                network= transaction["network"],
-                type = transaction["type"],
-                log= str(transaction)
+    bank_responses = get_statments()
+    for bank_response in bank_responses:
+        if isinstance(bank_response, dict) and bank_response.get("statement").get("transactions"):
+            transactions = bank_response.get("statement").get("transactions")
+            logs = []
+            for transaction in transactions:
+                customer = frappe.db.get_value("Customer", [["anb_bank_account", "=", transaction["narrative"]["narr3"]]], ["name", "anb_bank_account"], as_dict=True)
+                payment_log = frappe.get_doc(dict(
+                    doctype = "Anb Payment Log",
+                    transaction_number = transaction["refNum"],
+                    customer_name = customer.name if customer else "",
+                    bank_account_number = customer.anb_bank_account if customer else transaction["narrative"]["narr3"],
+                    date = transaction["valueDate"],
+                    time = transaction["postingTime"],
+                    amount = transaction["amount"].get("amount"),
+                    currency= transaction["amount"].get("currencyCode"),
+                    channel= transaction["channel"],
+                    network= transaction["network"],
+                    type = transaction["type"],
+                    log= str(transaction)
+                )).insert()
+                payment_log.save()
+                logs.append(dict(
+                    transaction_number = transaction["refNum"],
+                    payment_log = payment_log.name
+                ))
+            
+            queue = frappe.get_doc(dict(
+                doctype = "Anb Log Queue",
+                posting_date = today(),
+                posting_time = nowtime(),
+                logs = logs,
             )).insert()
-            payment_log.save()
-            logs.append(dict(
-                transaction_number = transaction["refNum"],
-                payment_log = payment_log.name
-            ))
-        
-        queue = frappe.get_doc(dict(
-            doctype = "Anb Log Queue",
-            posting_date = today(),
-            posting_time = nowtime(),
-            logs = logs,
-        )).insert()
-        queue.save()
+            queue.save()
 
