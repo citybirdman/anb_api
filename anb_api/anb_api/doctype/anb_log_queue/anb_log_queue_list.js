@@ -10,5 +10,16 @@ frappe.listview_settings['Anb Log Queue'] = {
 	    } else if (doc.status === "Failed") {
 			return [__("Failed"), "red", "status,=,Failed"];
 	    }
+    },
+	
+	onload: function(list) {
+		list.page.add_inner_button(__('↓ Request Last Statments'), function() {
+                frappe.call("anb_api.tasks.make_bank_logs")
+				.then(function(frm){
+					list.refresh();
+				});
+				
+            },"",'success' // Add your desired styles
+        );
     }
 }
