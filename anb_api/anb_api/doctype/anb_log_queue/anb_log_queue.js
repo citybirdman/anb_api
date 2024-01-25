@@ -2,7 +2,8 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Anb Log Queue', {
-	// refresh: function(frm) {
-
-	// }
+	setup: function(frm) {
+		frm.ignore_doctypes_on_cancel_all = ['Anb Payment Log'];
+		frappe.flags.ignore_links = true
+	}
 });

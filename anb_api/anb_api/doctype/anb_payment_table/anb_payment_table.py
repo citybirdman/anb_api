@@ -5,4 +5,5 @@
 from frappe.model.document import Document
 
 class AnbPaymentTable(Document):
-	pass
+	def validate(self):
+		self.flags.ignore_links = True

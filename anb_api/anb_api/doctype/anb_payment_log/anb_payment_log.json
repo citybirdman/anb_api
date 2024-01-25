@@ -21,6 +21,7 @@
   "channel",
   "network",
   "log",
+  "log_queue",
   "status"
  ],
  "fields": [
@@ -103,11 +104,26 @@
    "fieldtype": "Select",
    "label": "status",
    "options": "Success\nFailed"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "log_queue",
+   "fieldtype": "Link",
+   "label": "Log Queue",
+   "options": "Anb Log Queue"
   }
  ],
- "index_web_pages_for_search": 1,
- "links": [],
- "modified": "2024-01-11 17:33:14.308998",
+ "is_submittable": 1,
+ "links": [
+  {
+   "is_child_table": 1,
+   "link_doctype": "Anb Payment Table",
+   "link_fieldname": "payment_log",
+   "parent_doctype": "Anb Log Queue",
+   "table_fieldname": "logs"
+  }
+ ],
+ "modified": "2024-01-24 23:04:13.656669",
  "modified_by": "Administrator",
  "module": "Anb Api",
  "name": "Anb Payment Log",
@@ -115,6 +131,8 @@
  "owner": "Administrator",
  "permissions": [
   {
+   "amend": 1,
+   "cancel": 1,
    "create": 1,
    "delete": 1,
    "email": 1,
@@ -124,19 +142,17 @@
    "report": 1,
    "role": "System Manager",
    "share": 1,
+   "submit": 1,
    "write": 1
   },
   {
-   "create": 1,
-   "delete": 1,
    "email": 1,
    "export": 1,
    "print": 1,
    "read": 1,
    "report": 1,
    "role": "Accounts Manager",
-   "share": 1,
-   "write": 1
+   "share": 1
   }
  ],
  "sort_field": "modified",
