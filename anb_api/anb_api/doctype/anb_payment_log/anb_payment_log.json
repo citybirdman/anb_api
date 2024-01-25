@@ -100,10 +100,11 @@
    "label": "Time"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "status",
    "fieldtype": "Select",
    "label": "status",
-   "options": "Success\nFailed"
+   "options": "Success\nDiscarded\nFailed"
   },
   {
    "allow_on_submit": 1,
@@ -123,7 +124,7 @@
    "table_fieldname": "logs"
   }
  ],
- "modified": "2024-01-24 23:04:13.656669",
+ "modified": "2024-01-25 22:23:30.764202",
  "modified_by": "Administrator",
  "module": "Anb Api",
  "name": "Anb Payment Log",

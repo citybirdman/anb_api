@@ -17,6 +17,7 @@ class AnbPaymentLog(Document):
 		
 	def create_payments(self):
 		frappe.get_doc("Payment Entry", dict(
+			payment_type = "Recieve",
 			party_type = "Customer",
 			party = self.customer_name,
 			amount = self.amount,
