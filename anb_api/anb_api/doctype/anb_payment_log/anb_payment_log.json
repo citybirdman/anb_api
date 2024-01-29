@@ -18,6 +18,7 @@
   "type",
   "column_break_knwn7",
   "naming_series",
+  "company",
   "currency",
   "channel",
   "network",
@@ -25,7 +26,9 @@
   "log",
   "log_queue",
   "status",
-  "amended_from"
+  "error",
+  "failed_log",
+  "dflt_currency"
  ],
  "fields": [
   {
@@ -107,7 +110,8 @@
    "fieldname": "status",
    "fieldtype": "Select",
    "label": "status",
-   "options": "Success\nDiscarded\nFailed"
+   "options": "Success\nDiscarded\nFailed",
+   "read_only": 1
   },
   {
    "allow_on_submit": 1,
@@ -122,20 +126,33 @@
    "label": "Company Account Number"
   },
   {
-   "fieldname": "amended_from",
-   "fieldtype": "Link",
-   "label": "Amended From",
-   "no_copy": 1,
-   "options": "Anb Payment Log",
-   "print_hide": 1,
-   "read_only": 1,
-   "search_index": 1
-  },
-  {
    "fieldname": "mode_of_payment",
    "fieldtype": "Link",
    "label": "Mode Of Payment",
    "options": "Mode of Payment"
+  },
+  {
+   "fieldname": "error",
+   "fieldtype": "Data",
+   "label": "Error"
+  },
+  {
+   "fieldname": "failed_log",
+   "fieldtype": "Link",
+   "label": "Linked Failed Log",
+   "options": "Anb Payment Log"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company"
+  },
+  {
+   "fieldname": "dflt_currency",
+   "fieldtype": "Data",
+   "label": "Default Currency",
+   "options": "Currency"
   }
  ],
  "is_submittable": 1,
@@ -148,7 +165,7 @@
    "table_fieldname": "logs"
   }
  ],
- "modified": "2024-01-29 16:40:11.353076",
+ "modified": "2024-01-30 00:51:36.341521",
  "modified_by": "Administrator",
  "module": "Anb Api",
  "name": "Anb Payment Log",
@@ -156,19 +173,13 @@
  "owner": "Administrator",
  "permissions": [
   {
-   "amend": 1,
-   "cancel": 1,
-   "create": 1,
-   "delete": 1,
    "email": 1,
    "export": 1,
    "print": 1,
    "read": 1,
    "report": 1,
    "role": "System Manager",
-   "share": 1,
-   "submit": 1,
-   "write": 1
+   "share": 1
   },
   {
    "email": 1,

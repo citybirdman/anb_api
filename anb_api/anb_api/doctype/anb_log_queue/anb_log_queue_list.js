@@ -7,6 +7,9 @@ frappe.listview_settings['Anb Log Queue'] = {
 		} else if (doc.status === "Partially Complete") {
 			return [__("Partially Complete"), "yellow", "status,=,Partially Complete"];
 			
+	    } else if (doc.status === "Discarded") {
+			return [__("Discarded"), "gray", "status,=,Discarded"];
+
 	    } else if (doc.status === "Failed") {
 			return [__("Failed"), "red", "status,=,Failed"];
 	    }

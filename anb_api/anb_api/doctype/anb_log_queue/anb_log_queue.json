@@ -10,8 +10,10 @@
  "field_order": [
   "naming_series",
   "posting_date",
+  "account_number",
   "column_break_ohxeh",
   "posting_time",
+  "company",
   "payment_logs_section",
   "logs",
   "response",
@@ -68,7 +70,7 @@
    "fieldname": "status",
    "fieldtype": "Select",
    "label": "Status",
-   "options": "Complete\nPartially Complete\nFailed"
+   "options": "Complete\nPartially Complete\nDiscarded\nFailed"
   },
   {
    "fieldname": "amended_from",
@@ -79,6 +81,17 @@
    "print_hide": 1,
    "read_only": 1,
    "search_index": 1
+  },
+  {
+   "fieldname": "account_number",
+   "fieldtype": "Data",
+   "label": "Account Number"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "company",
+   "options": "Company"
   }
  ],
  "is_submittable": 1,
@@ -88,7 +101,7 @@
    "link_fieldname": "log_queue"
   }
  ],
- "modified": "2024-01-25 00:40:39.161392",
+ "modified": "2024-01-29 23:41:54.752473",
  "modified_by": "Administrator",
  "module": "Anb Api",
  "name": "Anb Log Queue",
@@ -96,7 +109,6 @@
  "owner": "Administrator",
  "permissions": [
   {
-   "amend": 1,
    "cancel": 1,
    "create": 1,
    "delete": 1,

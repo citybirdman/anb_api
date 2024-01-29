@@ -11,6 +11,7 @@
   "client_id",
   "column_break_ryqk7",
   "client_secret",
+  "auto_create_payment",
   "section_break_kha6c",
   "accounts"
  ],
@@ -49,12 +50,18 @@
    "fieldtype": "Table",
    "label": "Accounts",
    "options": "Anb Settings Table"
+  },
+  {
+   "default": "0",
+   "fieldname": "auto_create_payment",
+   "fieldtype": "Check",
+   "label": "Automatically Created Payment Entries"
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2024-01-01 20:10:27.396213",
+ "modified": "2024-01-29 19:56:52.803582",
  "modified_by": "Administrator",
  "module": "Anb Api",
  "name": "ANB Settings",

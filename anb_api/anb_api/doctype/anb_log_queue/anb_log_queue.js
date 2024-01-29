@@ -9,7 +9,13 @@ frappe.ui.form.on('Anb Log Queue', {
 	refresh: function(frm) {
         frm.add_custom_button(__('Create succeeded Payments'), function() {
             // Add your custom action code here
-            frappe.msgprint('functionality will be added soon!');
+            frappe.call({
+                method: "anb_api.anb_api.doctype.anb_log_queue.create_payments", 
+                args: {
+                    logs: frm.doc.logs,
+                    status: frm.doc.status
+                }
+            });
         }).removeClass("btn-default").css({'background-color': '#4e5a66', 'border-color': '#4e5a66', 'color':'#fff'});;
     }
 });
