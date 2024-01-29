@@ -9,7 +9,8 @@ class AnbPaymentLog(Document):
 		self.flags.ignore_links = True
 		self.ignore_linked_doctypes = ("Anb Payment Table", "Anb Log Queue")
 		if self.validate_status():
-			self.create_payment()
+			pass
+			# self.create_payment()
 
 	def validate_status(self):
 		if self.status != "Failed":
