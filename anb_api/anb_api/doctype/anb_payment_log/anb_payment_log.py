@@ -9,16 +9,16 @@ class AnbPaymentLog(Document):
 		self.flags.ignore_links = True
 		self.ignore_linked_doctypes = ("Anb Payment Table", "Anb Log Queue")
 		if self.validate_status():
-			pass
-			# self.create_payment()
+			self.create_payment()
 
 	def validate_status(self):
 		if self.status != "Failed":
 			if not self.customer_name:
 				self.status = "Failed"
 				self.error = "The account number is not right or not linked to a customer"
-				return False
-		return True
+			else:
+				return True
+		return False
 		
 	def create_payment(self):
 		payment = frappe.get_doc("Payment Entry", dict(
