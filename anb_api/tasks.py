@@ -52,16 +52,18 @@ def make_bank_logs():
                 posting_time = nowtime()
             )).insert()
             queue_logs = []
+            mode_of_payment = frappe.db.get_value("Anb Settings Table", [["account_number", "=", bank_response.get("accountNumber")]], "mode_of_payment")
             for transaction in transactions:
                 if (not frappe.db.get_value("Anb Payment Table", [["transaction_number", "=", transaction["refNum"]]]) 
                     or transaction["refNum"] in failed_transactions
                 ):
-                    customer = frappe.db.get_value("Customer", [["anb_bank_account", "=", transaction["narrative"]["narr3"]]], ["name", "anb_bank_account"], as_dict=True)
+                    customer = frappe.db.get_value("Customer", [["anb_bank_account", "=", transaction.get("srcAcctNum")]], ["name", "anb_bank_account"], as_dict=True)
                     payment_log = frappe.get_doc(dict(
                         doctype = "Anb Payment Log",
                         transaction_number = transaction["refNum"],
                         customer_name = customer.name if customer else "",
-                        bank_account_number = customer.anb_bank_account if customer else transaction["narrative"]["narr3"],
+                        bank_account_number = customer.anb_bank_account if customer else transaction.get("srcAcctNum"),
+                        company_account_number = bank_response.get("accountNumber"),
                         date = transaction["valueDate"],
                         time = transaction["postingTime"],
                         amount = - transaction["amount"].get("amount"),
@@ -69,6 +71,7 @@ def make_bank_logs():
                         channel= transaction["channel"],
                         network= transaction["network"],
                         type = transaction["type"],
+                        mode_of_payment = mode_of_payment,
                         log_queue = queue.name,
                         log= str(transaction)
                     )).insert()
