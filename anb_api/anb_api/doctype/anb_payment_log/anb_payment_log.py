@@ -14,8 +14,11 @@ class AnbPaymentLog(Document):
 	def update_status(self):
 		if self.status != "Failed":
 			if not self.customer_name:
-				self.status = "Failed"
 				self.error = "The account number is not right or not linked to a customer"
+			elif self.currency != self.dflt_currency:
+				self.error = "the transaction currency doesn't match the default account currency"
+			if self.error:
+				self.status = "Failed"
 
 	def validate_status(self):
 		if self.status == "Success":

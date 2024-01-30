@@ -29,7 +29,6 @@
    "reqd": 1
   },
   {
-   "fetch_from": "company.create_chart_of_accounts_based_on",
    "fieldname": "currency",
    "fieldtype": "Link",
    "label": "Currency",
@@ -45,7 +44,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-01-29 23:50:49.952854",
+ "modified": "2024-01-30 17:48:45.268858",
  "modified_by": "Administrator",
  "module": "Anb Api",
  "name": "Anb Settings Table",
