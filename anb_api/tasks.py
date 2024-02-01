@@ -23,14 +23,15 @@ def get_statments():
     }
     results = []
     for account in settings.accounts:
-        transactions : dict
-        offset : str
+        transactions, offset, num_of_trcn = [], "", 0
         while result := get_account_statment(account.account_number, settings, True, offset, headers):
             offset = result["offset"]
+            num_of_trcn += result["numberOfRecords"]
             if result["statement"]:
-                transactions.append(result["statement"]["transactions"])
+                transactions.extend(result["statement"]["transactions"])
             if result["completed"]:
                 result["statement"]["transactions"] = transactions
+                result["numberOfRecords"] = num_of_trcn
                 break
                 
         results.append(result)
