@@ -11,6 +11,7 @@
   "client_id",
   "column_break_ryqk7",
   "client_secret",
+  "days",
   "auto_create_payment",
   "section_break_kha6c",
   "accounts"
@@ -56,12 +57,18 @@
    "fieldname": "auto_create_payment",
    "fieldtype": "Check",
    "label": "Automatically Created Payment Entries"
+  },
+  {
+   "fieldname": "days",
+   "fieldtype": "Float",
+   "label": "Number of Days",
+   "precision": "0"
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2024-01-29 19:56:52.803582",
+ "modified": "2024-02-01 13:23:23.723653",
  "modified_by": "Administrator",
  "module": "Anb Api",
  "name": "ANB Settings",

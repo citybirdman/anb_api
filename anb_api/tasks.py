@@ -1,13 +1,14 @@
 import frappe
 import json
 import requests
+import time
 from frappe.utils import add_days, today, nowtime
-def get_account_statment(account_number, settings, try_again=True, offset="", headers={}):
-    from_date = add_days(today(), -7) 
+def get_account_statment(account_number, settings, try_again=True, offset="", headers={}, days = 7):
+    from_date = add_days(today(), -days) 
     response = requests.get(f"https://test-api.anb.com.sa/v2/report/account/statement?accountNumber={account_number}&offset={offset}&type=JSON&fromDate={from_date}", headers=headers)
     if response.status_code != 200:
         if try_again:
-            get_account_statment(account_number, settings, False, offset, headers)
+            get_account_statment(account_number, settings, False, offset, headers, days)
         else:
             return {"account_number": account_number, "completed": False}
     else:
@@ -22,9 +23,11 @@ def get_statments():
         "Accept": "application/json"
     }
     results = []
+    days = settings.days
     for account in settings.accounts:
         transactions, offset, num_of_trcn = [], "", 0
-        while result := get_account_statment(account.account_number, settings, True, offset, headers):
+
+        while result := get_account_statment(account.account_number, settings, True, offset, headers, days):
             offset = result["offset"]
             num_of_trcn += result["numberOfRecords"]
             if result["statement"]:
@@ -111,3 +114,34 @@ def make_bank_logs():
             else:
                 queue.delete()
 
+def reconcile_everything():
+    reconcile_payments()
+    frappe.call("erpnext.accounts.doctype.process_payment_reconciliation.process_payment_reconciliation.trigger_reconciliation_for_queued_docs")
+
+def reconcile_payments():
+    for company in frappe.get_all("Company"):
+        company = company.name
+        account = frappe.db.get_value("Company", company, "default_receivable_account")
+        for customer in frappe.get_all("Customer"):
+            outstanding_documents = frappe.call('erpnext.accounts.doctype.payment_entry.payment_entry.get_outstanding_reference_documents', args = {'party_type':'Customer', 'party':customer.name, 'party_account':account}) or 0
+            flag = False
+            if outstanding_documents:
+                total = 0
+                for i in outstanding_documents:
+                    if i.outstanding_amount > 0:
+                        flag = True
+                        break
+            if flag:
+                unallocated_amount = frappe.db.get_value("Payment Entry", [["party", "=", customer.name], ["unallocated_amount", ">", 0], ["docstatus", "=", 1]], "sum(unallocated_amount)") or 0
+                credit_amount = frappe.db.get_value("Journal Entry Account", [["party", "=", customer.name], ["credit", ">", 0], ["reference_name", "=", None], ["docstatus", "=", 1]], "sum(credit)") or 0
+                if unallocated_amount or credit_amount:
+                    reconciliation = frappe.get_doc({
+                        "doctype": "Process Payment Reconciliation",
+                        "party_type": "Customer",
+                        "party" : customer.name,
+                        "company": company,
+                        "receivable_payable_account": account
+                    }).insert()
+                    reconciliation.save()
+                    reconciliation.submit()
+ 
