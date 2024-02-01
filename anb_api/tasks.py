@@ -2,12 +2,12 @@ import frappe
 import json
 import requests
 from frappe.utils import add_days, today, nowtime
-def get_account_statment(account_number, settings, try_again=True, headers={}):
+def get_account_statment(account_number, settings, try_again=True, offset="", headers={}):
     from_date = add_days(today(), -7) 
-    response = requests.get(f"https://test-api.anb.com.sa/v2/report/account/statement?accountNumber={account_number}&offset=Offset&type=JSON&fromDate={from_date}", headers=headers)
+    response = requests.get(f"https://test-api.anb.com.sa/v2/report/account/statement?accountNumber={account_number}&offset={offset}&type=JSON&fromDate={from_date}", headers=headers)
     if response.status_code != 200:
         if try_again:
-            get_account_statment(account_number, settings, False)
+            get_account_statment(account_number, settings, False, offset, headers)
         else:
             return {"account_number": account_number, "completed": False}
     else:
@@ -23,7 +23,18 @@ def get_statments():
     }
     results = []
     for account in settings.accounts:
-        results.append(get_account_statment(account.account_number, settings, True, headers))
+        transactions : dict
+        offset : str
+        while result := get_account_statment(account.account_number, settings, True, offset, headers):
+            offset = result["offset"]
+            if result["statement"]:
+                transactions.append(result["statement"]["transactions"])
+            if result["completed"]:
+                result["statement"]["transactions"] = transactions
+                break
+                
+        results.append(result)
+
     return results
 
 @frappe.whitelist()
