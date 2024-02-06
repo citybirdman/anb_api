@@ -137,7 +137,7 @@ scheduler_events = {
 #		"anb_api.tasks.daily"
 #	],
 	"hourly": [
-		"anb_api.tasks.make_bank_logs",
+		"anb_api.tasks.enqueue_bank_logs",
         "anb_api.tasks.reconcile_everything"
 	],
 #	"weekly": [

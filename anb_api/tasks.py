@@ -36,6 +36,8 @@ def get_statments():
                 result["statement"]["transactions"] = transactions
                 result["numberOfRecords"] = num_of_trcn
                 break
+            if result["numberOfRecords"] == 0:
+                break
                 
         results.append(result)
 
@@ -78,6 +80,8 @@ def make_bank_logs():
                     or transaction["refNum"] in failed_transactions
                 ):
                     customer = frappe.db.get_value("Customer", [["anb_bank_account", "=", transaction.get("srcAcctNum") or ""]], ["name", "anb_bank_account"], as_dict=True)
+
+
                     if transaction.get("srcAcctNum"):
                         failed_log = frappe.db.get_value("Anb Payment Log", [[ "transaction_number", "=", transaction["refNum"]], ["status", "=", "Failed"]], ["name", "status"], as_dict=True)
                         payment_log = frappe.get_doc(dict(
@@ -145,3 +149,6 @@ def reconcile_payments():
                     reconciliation.save()
                     reconciliation.submit()
  
+
+def enqueue_bank_logs():
+    frappe.enqueue('anb_api.tasks.make_bank_logs')
