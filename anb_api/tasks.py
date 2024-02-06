@@ -28,7 +28,7 @@ def get_statments():
         transactions, offset, num_of_trcn = [], "", 0
 
         while result := get_account_statment(account.account_number, settings, True, offset, headers, days):
-            offset = result["offset"]
+            offset = result["offset"] if isinstance(result, dict) else ""
             num_of_trcn += result["numberOfRecords"]
             if result["statement"]:
                 transactions.extend(result["statement"]["transactions"])
