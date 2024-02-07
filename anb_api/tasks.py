@@ -8,8 +8,7 @@ def get_account_statment(account_number, settings, try_again=True, offset="", he
     response = requests.get(f"https://test-api.anb.com.sa/v2/report/account/statement?accountNumber={account_number}&offset={offset}&type=JSON&fromDate={from_date}", headers=headers)
     if response.status_code != 200:
         if try_again:
-            if not get_account_statment(account_number, settings, False, offset, headers, days):
-                return {"account_number": account_number, "completed": True}
+            get_account_statment(account_number, settings, False, offset, headers, days)
         else:
             return {"account_number": account_number, "completed": False}
     else:
@@ -39,7 +38,10 @@ def get_statments():
                 break
             if result["numberOfRecords"] == 0:
                 break
-        results.append(result)
+        if result:
+            results.append(result)
+        else:
+            results.append({"account_number": account.account_number, "completed": True})
 
     return results
 

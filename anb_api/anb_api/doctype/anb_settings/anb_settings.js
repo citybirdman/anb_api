@@ -9,3 +9,11 @@ frappe.ui.form.on('ANB Settings', {
 		frm.refresh_field("url")
 	}
 });
+
+frappe.ui.form.on('Anb Settings Table', {
+	account_number: function(frm, cdt, cdn){
+		let row = locals[cdt][cdn];
+		row.account_number = row.account_number.trim();
+		frm.refresh_field("accounts");
+	}
+});
