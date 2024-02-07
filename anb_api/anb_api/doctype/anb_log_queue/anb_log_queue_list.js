@@ -18,7 +18,10 @@ frappe.listview_settings['Anb Log Queue'] = {
 		list.page.add_inner_button(__('↓ Request Last Statments'), function() {
                 frappe.call("anb_api.tasks.enqueue_bank_logs")
 				.then(function(frm){
-					list.refresh();
+					frappe.msgprint({
+						message:"Bulk operation is enqueued in background!",
+						alert: true
+					  })
 				});
 				
             },"",'success' // Add your desired styles
