@@ -1,7 +1,7 @@
 import frappe
+import traceback
 import json
 import requests
-import time
 from frappe.utils import add_days, today, nowtime
 def get_account_statment(account_number, settings, try_again=True, offset="", headers={}, days = 7):
     from_date = add_days(today(), -days) 
@@ -16,34 +16,33 @@ def get_account_statment(account_number, settings, try_again=True, offset="", he
     
 @frappe.whitelist()
 def get_statments():
-    settings = frappe.get_doc("ANB Settings")
-    response = json.loads(settings.start_connection().text)
-    headers = {
-        "Authorization": f"Bearer {response['access_token']}",
-        "Accept": "application/json"
-    }
-    results = []
-    days = settings.days
-    for account in settings.accounts:
-        transactions, offset, num_of_trcn = [], "", 0
+        settings = frappe.get_doc("ANB Settings")
+        response = json.loads(settings.start_connection().text)
+        headers = {
+            "Authorization": f"Bearer {response['access_token']}",
+            "Accept": "application/json"
+        }
+        results = []
+        days = settings.days
+        for account in settings.accounts:
+            transactions, offset, num_of_trcn = [], "", 0
+            while result := get_account_statment(account.account_number, settings, True, offset, headers, days):
+                offset = result.get("offset") if result.get("offset") else ""
+                num_of_trcn += result["numberOfRecords"]
+                if result["statement"]:
+                    transactions.extend(result["statement"]["transactions"])
+                if result["completed"]:
+                    result["statement"]["transactions"] = transactions
+                    result["numberOfRecords"] = num_of_trcn
+                    break
+                if result["numberOfRecords"] == 0:
+                    break
+            if result:
+                results.append(result)
+            else:
+                results.append({"account_number": account.account_number, "completed": True})
 
-        while result := get_account_statment(account.account_number, settings, True, offset, headers, days):
-            offset = result.get("offset") if result.get("offset") else ""
-            num_of_trcn += result["numberOfRecords"]
-            if result["statement"]:
-                transactions.extend(result["statement"]["transactions"])
-            if result["completed"]:
-                result["statement"]["transactions"] = transactions
-                result["numberOfRecords"] = num_of_trcn
-                break
-            if result["numberOfRecords"] == 0:
-                break
-        if result:
-            results.append(result)
-        else:
-            results.append({"account_number": account.account_number, "completed": True})
-
-    return results
+        return results
 
 @frappe.whitelist()
 def check_latest_failed_logs(account_number):
@@ -153,4 +152,9 @@ def reconcile_payments():
  
 
 def enqueue_bank_logs():
-    frappe.enqueue('anb_api.tasks.make_bank_logs')
+    try:
+        frappe.enqueue('anb_api.tasks.make_bank_logs', queue="long", timeout=0)
+    except Exception as e:
+        # Log the error with traceback using frappe.log_error
+        error_message = f"An error occurred: {str(e)}\n\nTraceback:\n{traceback.format_exc()}"
+        frappe.log_error(error_message, title="My Function Error")

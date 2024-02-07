@@ -16,7 +16,7 @@ frappe.listview_settings['Anb Log Queue'] = {
     },
 	onload: function(list) {
 		list.page.add_inner_button(__('↓ Request Last Statments'), function() {
-                frappe.call("anb_api.tasks.make_bank_logs")
+                frappe.call("anb_api.tasks.enqueue_bank_logs")
 				.then(function(frm){
 					list.refresh();
 				});
