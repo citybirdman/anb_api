@@ -2,6 +2,19 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('ANB Settings', {
+	refresh: function(frm) {
+		if(frappe.user.has_role("System Manager")){
+			frm.add_custom_button(__('Get Puplic Ip'), function() {
+				frappe.call({
+					method: "anb_api.get_public_ip", 
+					callback: function(ip){
+						console.log(ip);
+						frappe.throw(ip);
+					}
+				})
+			}).removeClass("btn-default")
+		}
+	},
 	before_save: function(frm){
 		frm.doc.url = frm.doc.url.replace("https://", "").replace("http://", "")
 		if(frm.doc.url[cur_frm.doc.url.length - 1] == "/")

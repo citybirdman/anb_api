@@ -24,7 +24,7 @@ frappe.listview_settings['Anb Log Queue'] = {
 					  })
 				});
 				
-            },"",'success' // Add your desired styles
+            },"",'success'
         );
     }
 }

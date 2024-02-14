@@ -17,6 +17,8 @@ class AnbPaymentLog(Document):
 				self.error = "The account number is not right or not linked to a customer"
 			elif self.currency != self.dflt_currency:
 				self.error = "the transaction currency doesn't match the default account currency"
+			elif self.amount < 0:
+				self.error = "amount is less than zero"
 			if self.error:
 				self.status = "Failed"
 
